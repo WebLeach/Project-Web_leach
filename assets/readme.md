@@ -1,1 +1,0 @@
-Simple assets goes here

@@ -624,6 +624,9 @@ class Image_loader {
 			imgx.id = "img_id_" + i;
 			imgx.className = "per_img disable_selection";
 
+			imgx.onerror= function() {
+				alt_(this, ["?assets/loader-lite.png"])}
+
 			imgx.alt =
 				"It seems image is not found (" + datas.images_loc[i] + ")";
 			imgx.style.display = "block";
