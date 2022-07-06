@@ -21,14 +21,14 @@ class Local_Data_Manager {
 			return 0;
 		}
 
-		log(datas.current_page_index);
+		//log(datas.current_page_index);
 		if (
 			datas.last_opened == "undefined" ||
 			datas.last_opened == null ||
 			datas.last_opened == -1
 		) {
 			datas.last_opened = datas.current_page_index;
-			log("show_last_opened used set_local_data");
+			//log("show_last_opened used set_local_data");
 			this.set_local_data();
 			return;
 		}
@@ -38,7 +38,7 @@ class Local_Data_Manager {
 			datas.last_opened != datas.current_page_index
 		) {
 			let header = "Psst!";
-			log("last_opened", datas.last_opened);
+			//log("last_opened", datas.last_opened);
 			let content =
 				"You left the page on <a id= 'lastleft' href='" +
 				datas.pages_list[datas.last_opened] +
@@ -382,7 +382,7 @@ class CH_PageStyler {
 		//2: border color 1> black 2> white 3> theme #......> custom
 		//3: border width [1-10]        [default: 1]
 
-		log("Setting default style");
+		//log("Setting default style");
 
 		this.set_menu_style(style);
 		this.set_local_style(style);
@@ -390,7 +390,7 @@ class CH_PageStyler {
 	}
 
 	get_local_style() {
-		log("get_local_style used get_local_data");
+		//log("get_local_style used get_local_data");
 		return local_data_manager.get_local_data();
 	}
 
@@ -424,7 +424,7 @@ class CH_PageStyler {
 		arr.push(tools.onlyInt(border_color));
 		arr.push(tools.onlyInt(byName("border-width")[0].value));
 
-		log(99, arr);
+		//log(99, arr);
 		return arr;
 	}
 
@@ -432,7 +432,7 @@ class CH_PageStyler {
 		var style_temp = style;
 
 		this.set_local_style();
-		log(style);
+		//log(style);
 		if (style_temp[0] == 1) {
 			switchBtn.set_switch_mode("S-image-border", "ON");
 		} else {
@@ -455,7 +455,7 @@ class CH_PageStyler {
 	}
 
 	display_changes(values) {
-		log("display_changes values", values);
+		//log("display_changes values", values);
 		var border_color = "#000";
 		if (values[0] == 1) {
 			if (values[2] == 2) {
@@ -486,7 +486,7 @@ class CH_PageStyler {
 		} else {
 			//datas.current_style = this.get_local_style()
 			called("load_style_on_start", "set_menu_style & display_changes");
-			log(datas.current_style);
+			//log(datas.current_style);
 			this.set_menu_style(datas.current_style);
 			this.display_changes(datas.current_style);
 		}
@@ -977,7 +977,7 @@ class Popup_Msg {
 		if (toggle_scroll) {
 			tools.toggle_scroll();
 		}
-		log(tools.hasClass(this.popup_obj, "active"));
+		//log(tools.hasClass(this.popup_obj, "active"));
 		if (!tools.hasClass(this.popup_obj, "active")) {
 			this.close();
 		}
@@ -1181,7 +1181,7 @@ class Project_Panel_ {
 		var self = this;
 		var to_search = this.input_.value.toLowerCase();
 		tools.del_child(this.rside_project);
-		log(11);
+		//log(11);
 		
 		if (to_search.length > 0) {
 			this.input_.setAttribute("data-state", "1");
@@ -1199,7 +1199,7 @@ class Project_Panel_ {
 			this.input_.setAttribute("data-state", "0");
 			this.button_.innerHTML = '<i class="fa-light fa-magnifying-glass" style="line-height:1.8"></i>';
 		}
-		log(12);
+		//log(12);
 		var total_result = 0;
 		for (let i = 0; i < datas.pages_list.length; i++) {
 			if (datas.pages_list[i].toLowerCase().indexOf(to_search) !== -1) {
@@ -1232,7 +1232,7 @@ class Project_Panel_ {
 			}
 		}
 
-		log(13);
+		//log(13);
 	}
 }
 
@@ -1469,7 +1469,7 @@ class Chapter_Handler {
 
 	display_data() {
 		//log(tools.is_defined( sidebar_control.closeNavL));
-		log(369);
+		//log(369);
 		// sets titles and Headline data and links
 		//alert(69)
 		document.title =
@@ -1478,21 +1478,21 @@ class Chapter_Handler {
 			String.fromCharCode(187) +
 			" " +
 			datas.pages_list[datas.current_page_index];
-		log(1);
+		//log(1);
 		byId("proj_name").innerHTML = datas.proj_name;
 		byId("page_title").innerHTML =
 			datas.pages_list[datas.current_page_index];
 		//byId('go2main').href = '../index.html';
-		log(2);
+		//log(2);
 		project_panel.show_search_results();
-		log(3);
+		//log(3);
 			
 
 		project_panel.input_.oninput = function () {
 			project_panel.show_search_results();
 		};
 
-		log(4);
+		//log(4);
 
 		local_data_manager.show_last_opened();
 
@@ -1654,6 +1654,7 @@ var chapter_list_handler = new Chapter_List_Handler();
 class PWA_Handler {
 	constructor() {
 		this.popup_msg_alt = new Popup_Msg();
+		this.BUSY = false;
 	}
 
 	push(data, link) {
@@ -1661,6 +1662,11 @@ class PWA_Handler {
 	}
 
 	async update(data, link) {
+		//log(this.BUSY)
+		if (this.BUSY) {
+			return;
+		}
+		this.BUSY = true;
 		if (!data) {
 			document.location = link;
 			return true;
@@ -1670,21 +1676,19 @@ class PWA_Handler {
 			"<center><br><img class='loader' src='/assets/anim/loader-lite.png' onerror='alt_(this, [\"?assets/loader-lite.png\"])'></img></center>",
 			false
 		);
-		this.popup_msg_alt.open_popup();
+		await this.popup_msg_alt.open_popup();
 		config.popup_msg_open = this.popup_msg_alt;
 		await tools.sleep(200);
 		datas.init();
-		log(data.page_type);
+		//log(data.page_type);
+		byId("logo").scrollIntoView({ behavior: "smooth" });
 		this.dismiss_others(data.page_type);
 
 		if (data.page_type == "CHAPTER") {
 			if (config.previous_type != data.page_type) {
-				log("CH switch_mode");
+				//log("CH switch_mode");
 				chapter_handler.switched_mode();
 			}
-			log("sidebar_control.closeNavL");
-
-			log(69);
 
 			datas.proj_name = data.proj_name;
 			datas.images_loc = data.images_loc;
@@ -1694,22 +1698,21 @@ class PWA_Handler {
 			datas.discuss_id = data.discuss_id;
 
 			datas.last_opened = datas.current_page_index;
-			log(chapter_handler.gen_data_set());
+			// log(chapter_handler.gen_data_set());
 
-			// tools.toggle_scroll(1)
-			log("chapter_handler.display_data");
+			// // tools.toggle_scroll(1)
+			// log("chapter_handler.display_data");
 
 			//this.push(data, link)
 
 			chapter_handler.display_data();
 
 			await tools.sleep(500);
-			byId("logo").scrollIntoView({ behavior: "smooth" });
 
 			await tools.sleep(500);
 		} else if (data.page_type == "CHAPTER-LIST") {
 			if (config.previous_type != data.page_type) {
-				log("CH list switch_mode");
+				// log("CH list switch_mode");
 				chapter_list_handler.switched_mode();
 			}
 			this.dismiss_others(data.page_type);
@@ -1730,19 +1733,20 @@ class PWA_Handler {
 			await tools.sleep(500);
 		} else {
 			this.popup_msg_alt.close();
+			this.BUSY = false;
 			return false;
 		}
 
 		this.popup_msg_alt.close();
-
+		this.BUSY = false;
 		return true;
 	}
 
 	dismiss_others(current) {
-		if (current != "CHAPTER") log("dismiss CHAPTER");
+		if (current != "CHAPTER") //log("dismiss CHAPTER");
 		chapter_handler.dismiss();
 		if (current != "CHAPTER-LIST") chapter_list_handler.dismiss();
-		log("dismiss CHAPTER-list");
+		//log("dismiss CHAPTER-list");
 	}
 }
 
@@ -1765,7 +1769,11 @@ if (helped_user() == false) {
 }
 
 
-async function handle_json_request(link) {
+async function handle_json_request(link, ev = null) {
+	if (ev) {
+		ev.preventDefault();
+	}
+	if (pwa_handler.BUSY) {return}
 	var req = link + ".json";
 	var data = await server_data_manager.get_server_data(req);
 
@@ -1832,7 +1840,7 @@ if (window.history && "pushState" in history) {
 		} else {
 			data = false;
 		}
-		log(data);
+		//log(data);
 
 		history.replaceState(data, document.title, document.location.href);
 	})();
