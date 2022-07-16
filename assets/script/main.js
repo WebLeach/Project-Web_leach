@@ -1681,7 +1681,8 @@ class PWA_Handler {
 		await tools.sleep(200);
 		datas.init();
 		//log(data.page_type);
-		byId("logo").scrollIntoView({ behavior: "smooth" });
+		// byId("logo").scrollIntoView({ behavior: "smooth" });
+		document.body.scrollTop = document.documentElement.scrollTop = 0;
 		this.dismiss_others(data.page_type);
 
 		if (data.page_type == "CHAPTER") {
