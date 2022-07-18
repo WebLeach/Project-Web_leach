@@ -1444,6 +1444,11 @@ class Chapter_Handler {
 	}
 
 	init() {
+		
+		if (helped_user() == false) {
+			show_help();
+		}
+
 		byId("sidebar_bg").onclick = function () {
 			sidebar_control.closeNav();
 		};
@@ -1723,6 +1728,7 @@ class PWA_Handler {
 			datas.discuss_id = data.discuss_id;
 			datas.current_page_index = -1;
 			datas.last_opened = datas.current_page_index;
+			datas.default_style = data.default_style;
 			datas.description = data.description;
 			datas.tags = data.tags;
 			datas.stars = data.stars;
@@ -1763,10 +1769,6 @@ if (config.page_type == "CHAPTER") {
 } else if (config.page_type == "CHAPTER-LIST") {
 	chapter_list_handler.init();
 	chapter_list_handler.display_changes();
-}
-
-if (helped_user() == false) {
-	show_help();
 }
 
 

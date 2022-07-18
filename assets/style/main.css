@@ -39,6 +39,16 @@ sidebar: 5
 
 }
 
+/* ++ patch to make things neat (remove I cursor) ++ */
+p, span{
+	cursor: default;
+}
+
+button, button *{
+	cursor: pointer !important;
+}
+/* ++++++++++++++++++++++++++++++++++++++++++++++++ */
+
 .overflowHidden {
 	overflow: hidden !important;
 }
@@ -125,12 +135,25 @@ body {
 	text-align: left;
 }
 
-@media screen and (max-width: 600px) {
+
+.description_container{
+	padding: 16px; 
+	text-align:left; 
+	float: left; 
+	max-width: 408px;
+}
+
+@media screen and (max-width: 700px) {
 	.poster {
 		float: none;
 		margin-left: auto;
 		margin-right: auto;
 	}
+
+	.description_container{
+		max-width: 95vw; 
+	}
+
 }
 
 .poster-img {
@@ -1030,7 +1053,7 @@ body {
 }
 
 .loader {
-	width: 80%px;
+	width: 80%;
 }
 
 
@@ -1045,7 +1068,7 @@ body {
 	overflow-y: scroll;
 	transition: all 0.5s;
 	padding-top: 60px;
-	scrollbar-width: 3px;
+	scrollbar-width: thin;
 	scrollbar-color: #2b2929 #9c9898;
 }
 
