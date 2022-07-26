@@ -1052,7 +1052,7 @@ class CH_Sidebar_control {
 		this.sidebar_bg.style.display = "block";
 		this.left_bar.classList.add("mySidebar-active");
 		byId("app_header").classList.toggle("top-titleR-active");
-		this.find_this_chapter.style.display = "block";
+		this.find_this_chapter.style.display = "flex";
 
 	}
 
@@ -1593,41 +1593,69 @@ class Chapter_List_Handler {
 		local_data_manager.show_last_opened();
 
 		tools.del_child("allA");
+		// for (let i = 0; i < datas.pages_list.length; i++) {
+		// 	var linkX = document.createElement("A");
+		// 	var linkContainer = document.createElement("DIV");
+		// 	linkContainer.className = "sub_li_divs";
+		// 	linkX.href = "./" + datas.pages_list[i] + "/index.html";
+
+		// 	linkX.onclick = function () {
+		// 		handle_json_request(this.href);
+
+		// 		datas.current_page_index = i;
+		// 		datas.last_opened = datas.current_page_index;
+
+		// 		local_data_manager.set_local_data();
+		// 		return false;
+		// 	};
+
+		// 	linkX.innerHTML = datas.pages_list[i];
+
+		// 	if (tools.is_in(i, datas.new_pages)) {
+		// 		linkX.innerHTML += '&nbsp; <span class="small-tag">NEW</span> ';
+		// 	}
+
+		// 	if (i % 2 == 0) {
+		// 		linkContainer.style.backgroundColor = "#35393b";
+		// 	} else {
+		// 		linkContainer.style.backgroundColor = "#222426";
+		// 	}
+
+		// 	linkX.className = "list_class";
+		// 	linkContainer.appendChild(linkX);
+		// 	linkContainer.appendChild(document.createElement("BR"));
+		// 	var hr_ = document.createElement("HR");
+		// 	linkContainer.appendChild(hr_);
+		// 	this.all_li.appendChild(linkContainer);
+		// }
+
+		
 		for (let i = 0; i < datas.pages_list.length; i++) {
-			var linkX = document.createElement("A");
-			var linkContainer = document.createElement("DIV");
-			linkContainer.className = "sub_li_divs";
-			linkX.href = "./" + datas.pages_list[i] + "/index.html";
-
-			linkX.onclick = function () {
-				handle_json_request(this.href);
-
+			var loc = createElement("a");
+			var box = createElement("div");
+			box.classList.add("ch-search-item");
+			box.classList.add("ch-list-item");
+			loc.appendChild(box);
+			if (i % 2 == 1) {
+				box.classList.add("ch-search-item-odd");
+			} else {
+				box.classList.add("ch-search-item-even");
+			}
+			loc.href = "./" + datas.pages_list[i] + "/index.html";
+			loc.onclick = function (evt) {
+				evt.preventDefault();
 				datas.current_page_index = i;
 				datas.last_opened = datas.current_page_index;
-
 				local_data_manager.set_local_data();
-				return false;
-			};
-
-			linkX.innerHTML = datas.pages_list[i];
-
-			if (tools.is_in(i, datas.new_pages)) {
-				linkX.innerHTML += '&nbsp; <span class="small-tag">NEW</span> ';
+				handle_json_request(this.href);
 			}
+			
 
-			if (i % 2 == 0) {
-				linkContainer.style.backgroundColor = "#35393b";
-			} else {
-				linkContainer.style.backgroundColor = "#222426";
+				box.innerText = datas.pages_list[i];
+				this.all_li.appendChild(loc);
 			}
+		
 
-			linkX.className = "list_class";
-			linkContainer.appendChild(linkX);
-			linkContainer.appendChild(document.createElement("BR"));
-			var hr_ = document.createElement("HR");
-			linkContainer.appendChild(hr_);
-			this.all_li.appendChild(linkContainer);
-		}
 	}
 
 	gen_data_set() {
