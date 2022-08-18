@@ -21,7 +21,6 @@ class Local_Data_Manager {
 			return 0;
 		}
 
-		//log(datas.current_page_index);
 		if (
 			datas.last_opened == "undefined" ||
 			datas.last_opened == null ||
@@ -32,7 +31,9 @@ class Local_Data_Manager {
 			this.set_local_data();
 			return;
 		}
-
+		
+		
+		// CASE: Currently open CHAPTER-LIST
 		if (
 			datas.current_page_index == -1 &&
 			datas.last_opened != datas.current_page_index
@@ -1255,7 +1256,7 @@ function show_ch_menus() {
 function show_credits() {
 	let header = "Credits";
 	let content =
-		"<h3>Created by Ratul Hasan</h3><h2>Special Thanks to:<hr width='80%'></h2><h3>Inul Haque<br>Sanjida Sirat<br>John Louis</h3>";
+		"<h3>Template created by Rasan147</h3><h2>Special Thanks to:<hr width='80%%'></h2><h3>Inul Haque<br>Sanjida Sirat<br>John Louis</h3>";
 
 	sidebar_control.closeNavL();
 
