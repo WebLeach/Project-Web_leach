@@ -846,7 +846,6 @@ body {
 }
 
 
-
 #find-this-chapter:hover {
 	background-color: #000;
 	color: var(--theme-color-text2);
@@ -1083,7 +1082,7 @@ body {
 
 .sidebar {
 	display: block;
-	opacity: 0.8;
+	opacity: 0;
 	height: 100%;
 	width: 300px;
 	position: fixed;
